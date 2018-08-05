@@ -50,12 +50,4 @@ function getGui(){
     var score = 'Height of Wall: ' + flappy.sensorHeightWall;
     fill(255);
     text(score, 10, 50);
-
-    var score = 'X of Wall: ' + wall.x + '   Y of Wall: ' + wall.y;
-    fill(255);
-    text(score, 10, 65);
-
-    var score = 'X of Flappy: ' + flappy.x + '   Y of Flappy: ' + flappy.y;
-    fill(255);
-    text(score, 10, 80);
 }
