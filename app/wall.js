@@ -6,7 +6,7 @@ function Wall(){
 
     this.start = function(){
         //this.width = random(20, 50);
-        this.height = int(random(60, 100));
+        this.height = int(random(70, 130));
         this.jumpToStartPosition();
     }
 
