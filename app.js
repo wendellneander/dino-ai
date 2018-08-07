@@ -2,19 +2,19 @@
 const GAME_SPEED = 5;
 const GAME_GRAVITY = 0.6;
 const FLOOR_HEIGHT = 20;
+const GENES_PER_GENOME = 3;
+const GENOME_INPUTS = 1;
 
-let flappy;
+let dino;
 let wall;
 let floor;
 
 function setup(){
     createCanvas(800, 500);
 
-    flappy = new Flappy();
+    dino = new Dino();
     wall = new Wall();
     floor = new Floor();
-
-    
 }
 
 function draw(){
@@ -26,28 +26,26 @@ function draw(){
     floor.update();
     floor.draw();
 
-    flappy.update(wall);
-    flappy.draw();
+    dino.update(wall);
+    dino.draw();
 
     getGui();
-
-    //frameRate(0);
 }
 
 function mouseClicked(){
-    flappy.jump();
+    dino.jump();
 }
 
 function getGui(){
-    var score = 'Score: ' + flappy.score;
+    var score = 'Score: ' + dino.score;
     fill(255);
     text(score, 10, 20);
 
-    var score = 'Distance to Wall: ' + flappy.sensorDistanceToWall;
+    var score = 'Distance to Wall: ' + dino.sensorDistanceToWall;
     fill(255);
     text(score, 10, 35);
 
-    var score = 'Height of Wall: ' + flappy.sensorHeightWall;
+    var score = 'Height of Wall: ' + dino.sensorHeightWall;
     fill(255);
     text(score, 10, 50);
 }
