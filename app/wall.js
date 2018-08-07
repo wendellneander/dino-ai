@@ -5,13 +5,13 @@ function Wall(){
     this.y = (height - this.height) - FLOOR_HEIGHT;
 
     this.start = function(){
-        //this.width = random(20, 50);
-        this.height = int(random(70, 130));
+        //this.width = random(20, 100);
+        this.height = int(random(50, 130));
         this.jumpToStartPosition();
     }
 
     this.jumpToStartPosition = function(){
-        this.x = width - this.width;
+        this.x = width - this.width + (int(random(30,200)));
         this.y = (height - this.height) - FLOOR_HEIGHT;
     }
     

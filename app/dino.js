@@ -1,6 +1,6 @@
 function Dino(){
     this.size = 40;
-    this.x = 20;
+    this.x = 80;
     this.y = (height - FLOOR_HEIGHT) - this.size;
     this.gravitySpeed = 1;
     this.gravity = GAME_GRAVITY;
@@ -21,9 +21,9 @@ function Dino(){
     this.startBrain = function(){
         const { Layer, Network } = window.synaptic;
 
-        this.inputLayer = new Layer(2);
-        this.hiddenLayer = new Layer(3);
-        this.outputLayer = new Layer(1);
+        this.inputLayer = new Layer(3);
+        this.hiddenLayer = new Layer(2);
+        this.outputLayer = new Layer(2);
 
         this.inputLayer.project(this.hiddenLayer);
         this.hiddenLayer.project(this.outputLayer);
@@ -36,20 +36,26 @@ function Dino(){
     }
 
     this.learn = function(){
-        let output = this.network.activate([this.sensorDistanceToWall, this.sensorHeightWall]);
+        let output = this.network.activate([
+            this.sensorDistanceToWall, 
+            this.sensorHeightWall,
+            GAME_SPEED
+        ]);
 
-        if(output < 5){
-            //this.jump();
+        this.jumpForce = (output[1] * 10) + 10;
+
+        this.output = output[0];
+
+        if(output[0] < 0.5){
+            this.jump();
         }
-
-        this.output = output[0] * 10000;
     }
     
     // Starting brain
     this.startBrain();
 
     this.jumpToStartPosition = function(){
-        this.x = 20;
+        this.x = 80;
         this.y = (height - FLOOR_HEIGHT) - this.size;
     }
 
@@ -65,12 +71,7 @@ function Dino(){
 
         this.learn();
         
-        if(this.isDead(wall)){
-            alert('GAME OVER');
-            wall.start()
-            this.jumpToStartPosition();
-            this.score = 0;
-        }
+        this.isDead(wall);
     }
 
     this.draw = function(){
@@ -84,7 +85,12 @@ function Dino(){
 
         let b = (this.x > wall.x && this.x < (wall.x + wall.width)) && (this.y + this.size) > wall.y;
 
-        return a || b;
+        if(a || b){
+            wall.start();
+            this.jumpToStartPosition();
+            this.score = 0;
+            GAME_SPEED = 5;
+        }
     }
 
     this.applyGravity = function(){

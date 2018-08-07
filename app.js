@@ -1,5 +1,5 @@
 
-const GAME_SPEED = 5;
+let GAME_SPEED = 5;
 const GAME_GRAVITY = 0.6;
 const FLOOR_HEIGHT = 20;
 const GENES_PER_GENOME = 3;
@@ -30,6 +30,8 @@ function draw(){
     dino.draw();
 
     getGui();
+
+    GAME_SPEED += (0.0001 + random(0.0001, 0.003));
 }
 
 function mouseClicked(){
@@ -41,15 +43,20 @@ function getGui(){
     fill(255);
     text(score, 10, 20);
 
-    var distance = 'Distance to Wall: ' + dino.sensorDistanceToWall;
+    var score = 'Speed: ' + GAME_SPEED;
     fill(255);
-    text(distance, 10, 35);
+    text(score, 10, 35);
 
-    var heightOfWall = 'Height of Wall: ' + dino.sensorHeightWall;
+    var distance = 'Distance: ' + dino.sensorDistanceToWall;
     fill(255);
-    text(heightOfWall, 10, 50);
+    text(distance, 10, 50);
+
+    var heightOfWall = 'Height: ' + dino.sensorHeightWall;
+    fill(255);
+    text(heightOfWall, 10, 65);
 
     var activation = 'Activation: ' + dino.output;
     fill(255);
-    text(activation, 10, 65);
+    text(activation, 10, 80);
+
 }
