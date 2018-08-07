@@ -41,11 +41,15 @@ function getGui(){
     fill(255);
     text(score, 10, 20);
 
-    var score = 'Distance to Wall: ' + dino.sensorDistanceToWall;
+    var distance = 'Distance to Wall: ' + dino.sensorDistanceToWall;
     fill(255);
-    text(score, 10, 35);
+    text(distance, 10, 35);
 
-    var score = 'Height of Wall: ' + dino.sensorHeightWall;
+    var heightOfWall = 'Height of Wall: ' + dino.sensorHeightWall;
     fill(255);
-    text(score, 10, 50);
+    text(heightOfWall, 10, 50);
+
+    var activation = 'Activation: ' + dino.output;
+    fill(255);
+    text(activation, 10, 65);
 }

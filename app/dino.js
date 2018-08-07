@@ -10,6 +10,44 @@ function Dino(){
     this.sensorDistanceToWall = width;
     this.sensorHeightWall = 0;
 
+    this.output = 0;
+
+    this.jump = function(){
+        if(this.isTouchingFloor()){
+            this.gravitySpeed -= this.jumpForce;
+        }
+    }
+
+    this.startBrain = function(){
+        const { Layer, Network } = window.synaptic;
+
+        this.inputLayer = new Layer(2);
+        this.hiddenLayer = new Layer(3);
+        this.outputLayer = new Layer(1);
+
+        this.inputLayer.project(this.hiddenLayer);
+        this.hiddenLayer.project(this.outputLayer);
+
+        this.network = new Network({
+            input: this.inputLayer,
+            hidden: [this.hiddenLayer],
+            output: this.outputLayer
+        });
+    }
+
+    this.learn = function(){
+        let output = this.network.activate([this.sensorDistanceToWall, this.sensorHeightWall]);
+
+        if(output < 5){
+            //this.jump();
+        }
+
+        this.output = output[0] * 10000;
+    }
+    
+    // Starting brain
+    this.startBrain();
+
     this.jumpToStartPosition = function(){
         this.x = 20;
         this.y = (height - FLOOR_HEIGHT) - this.size;
@@ -24,6 +62,8 @@ function Dino(){
         this.calculateScore();
 
         this.getWallData(wall);
+
+        this.learn();
         
         if(this.isDead(wall)){
             alert('GAME OVER');
@@ -36,12 +76,6 @@ function Dino(){
     this.draw = function(){
         fill(255);
         rect(this.x, this.y, this.size, this.size);
-    }
-
-    this.jump = function(){
-        if(this.isTouchingFloor()){
-            this.gravitySpeed -= this.jumpForce;
-        }
     }
 
     this.isDead = function(wall){
