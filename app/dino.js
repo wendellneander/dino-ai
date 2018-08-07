@@ -10,13 +10,6 @@ function Dino(){
     this.sensorDistanceToWall = width;
     this.sensorHeightWall = 0;
 
-    
-    this.inputGenome = new Genome(GENOME_INPUTS);
-    this.genome = new Genome(GENES_PER_GENOME);
-    this.outputGenome = new Genome(1);
-
-
-
     this.jumpToStartPosition = function(){
         this.x = 20;
         this.y = (height - FLOOR_HEIGHT) - this.size;

@@ -5,7 +5,7 @@ function Floor(){
     this.y = height - this.height;
 
     this.update = function(){
-        //check Collision
+        // TODO check Collision
     }
 
     this.draw = function(){
