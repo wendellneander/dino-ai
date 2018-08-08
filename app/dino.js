@@ -1,6 +1,6 @@
 function Dino(){
     this.size = 40;
-    this.x = 20;
+    this.x = 50;
     this.y = (height - FLOOR_HEIGHT) - this.size;
     this.gravitySpeed = 1;
     this.gravity = GAME_GRAVITY;
@@ -18,7 +18,7 @@ function Dino(){
 
 
     this.jumpToStartPosition = function(){
-        this.x = 20;
+        this.x = 50;
         this.y = (height - FLOOR_HEIGHT) - this.size;
     }
 
@@ -32,12 +32,7 @@ function Dino(){
 
         this.getWallData(wall);
         
-        if(this.isDead(wall)){
-            alert('GAME OVER');
-            wall.start()
-            this.jumpToStartPosition();
-            this.score = 0;
-        }
+        this.isDead(wall);
     }
 
     this.draw = function(){
@@ -57,7 +52,11 @@ function Dino(){
 
         let b = (this.x > wall.x && this.x < (wall.x + wall.width)) && (this.y + this.size) > wall.y;
 
-        return a || b;
+        if(a || b){
+            wall.start()
+            this.jumpToStartPosition();
+            this.score = 0;
+        }
     }
 
     this.applyGravity = function(){

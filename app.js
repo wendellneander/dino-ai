@@ -1,5 +1,5 @@
 
-const GAME_SPEED = 5;
+let GAME_SPEED = 5;
 const GAME_GRAVITY = 0.6;
 const FLOOR_HEIGHT = 20;
 const GENES_PER_GENOME = 3;
@@ -28,6 +28,8 @@ function draw(){
 
     dino.update(wall);
     dino.draw();
+    
+    GAME_SPEED += 0.0001;
 
     getGui();
 }
