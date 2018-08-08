@@ -6,7 +6,7 @@ function Wall(){
 
     this.start = function(){
         //this.width = random(20, 50);
-        this.height = int(random(70, 130));
+        this.height = int(random(50, 130));
         this.jumpToStartPosition();
     }
 
@@ -17,10 +17,6 @@ function Wall(){
     
     this.update = function(){
         this.x -= GAME_SPEED;
-
-        if(this.isDead()){
-            this.start();
-        }
     }
 
     this.draw = function(){
@@ -29,6 +25,12 @@ function Wall(){
     }
 
     this.isDead = function(){
-        return this.x + this.width <= 0;
+        let dead = this.x + this.width <= 0;
+
+        if(dead){
+            this.start();
+        }
+
+        return dead;
     }
 }

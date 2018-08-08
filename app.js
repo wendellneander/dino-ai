@@ -29,7 +29,7 @@ function draw(){
     dino.update(wall);
     dino.draw();
     
-    GAME_SPEED += 0.0001;
+    GAME_SPEED += (0.0001 + random(0.0001, 0.003));
 
     getGui();
 }
@@ -43,11 +43,15 @@ function getGui(){
     fill(255);
     text(score, 10, 20);
 
-    var score = 'Distance to Wall: ' + dino.sensorDistanceToWall;
+    var score = 'Speed: ' + GAME_SPEED;
     fill(255);
     text(score, 10, 35);
 
-    var score = 'Height of Wall: ' + dino.sensorHeightWall;
+    var distance = 'Distance: ' + dino.sensorDistanceToWall;
     fill(255);
-    text(score, 10, 50);
+    text(distance, 10, 50);
+
+    var heightOfWall = 'Height: ' + dino.sensorHeightWall;
+    fill(255);
+    text(heightOfWall, 10, 65);
 }

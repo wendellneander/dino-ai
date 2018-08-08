@@ -10,11 +10,9 @@ function Dino(){
     this.sensorDistanceToWall = width;
     this.sensorHeightWall = 0;
 
-    
     this.inputGenome = new Genome(GENOME_INPUTS);
     this.genome = new Genome(GENES_PER_GENOME);
     this.outputGenome = new Genome(1);
-
 
 
     this.jumpToStartPosition = function(){
@@ -52,11 +50,16 @@ function Dino(){
 
         let b = (this.x > wall.x && this.x < (wall.x + wall.width)) && (this.y + this.size) > wall.y;
 
-        if(a || b){
+        let dead = a || b;
+
+        if(dead){
             wall.start()
             this.jumpToStartPosition();
             this.score = 0;
+            GAME_SPEED = 5;
         }
+
+        return dead;
     }
 
     this.applyGravity = function(){
