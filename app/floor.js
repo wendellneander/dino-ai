@@ -4,10 +4,6 @@ function Floor(){
     this.x = 0;
     this.y = height - this.height;
 
-    this.update = function(){
-        //check Collision
-    }
-
     this.draw = function(){
         fill(200);
         noStroke();

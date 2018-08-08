@@ -5,6 +5,8 @@ function Dino(){
     this.gravitySpeed = 1;
     this.gravity = GAME_GRAVITY;
     this.jumpForce = 15;
+    this.walls;
+    this.wallNearest;
 
     this.score = 0;
     this.sensorDistanceToWall = width;
@@ -14,13 +16,16 @@ function Dino(){
     this.genome = new Genome(GENES_PER_GENOME);
     this.outputGenome = new Genome(1);
 
-
     this.jumpToStartPosition = function(){
         this.x = 50;
         this.y = (height - FLOOR_HEIGHT) - this.size;
     }
 
-    this.update = function(wall){
+    this.update = function(walls){
+        
+        this.walls = walls;
+
+        this.wallNearest = walls.getNearestWall();
 
         this.applyGravity();
 
@@ -28,9 +33,9 @@ function Dino(){
 
         this.calculateScore();
 
-        this.getWallData(wall);
+        this.getWallData();
         
-        this.isDead(wall);
+        this.isDead();
     }
 
     this.draw = function(){
@@ -44,19 +49,20 @@ function Dino(){
         }
     }
 
-    this.isDead = function(wall){
+    this.isDead = function(){
 
-        let a = (this.x < wall.x && (this.x + this.size) > wall.x) && (this.y + this.size) > wall.y;
+        let a = (this.x < this.wallNearest.x && (this.x + this.size) > this.wallNearest.x) && (this.y + this.size) > this.wallNearest.y;
 
-        let b = (this.x > wall.x && this.x < (wall.x + wall.width)) && (this.y + this.size) > wall.y;
+        let b = (this.x > this.wallNearest.x && this.x < (this.wallNearest.x + this.wallNearest.width)) && (this.y + this.size) > this.wallNearest.y;
 
         let dead = a || b;
 
         if(dead){
-            wall.start()
+            this.walls.restart();
             this.jumpToStartPosition();
             this.score = 0;
             GAME_SPEED = 5;
+            print('GAME OVER');
         }
 
         return dead;
@@ -85,11 +91,11 @@ function Dino(){
         this.score++;
     }
 
-    this.getWallData = function(wall){
+    this.getWallData = function(){
         let myX = this.x + this.size;
         let myY = this.y + this.size;
         
-        this.sensorDistanceToWall = int(dist(myX, myY, wall.x, wall.y + wall.height));
-        this.sensorHeightWall = wall.height;
+        this.sensorDistanceToWall = int(dist(myX, myY, this.wallNearest.x, this.wallNearest.y + this.wallNearest.height));
+        this.sensorHeightWall = this.wallNearest.height;
     }
 }

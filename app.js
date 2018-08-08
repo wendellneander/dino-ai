@@ -13,20 +13,18 @@ function setup(){
     createCanvas(800, 500);
 
     dino = new Dino();
-    wall = new Wall();
+    walls = new Walls();
     floor = new Floor();
 }
 
 function draw(){
     background(51);
 
-    wall.update();
-    wall.draw();
+    walls.update();
 
-    floor.update();
     floor.draw();
 
-    dino.update(wall);
+    dino.update(walls);
     dino.draw();
     
     GAME_SPEED += (0.0001 + random(0.0001, 0.003));
@@ -54,4 +52,8 @@ function getGui(){
     var heightOfWall = 'Height: ' + dino.sensorHeightWall;
     fill(255);
     text(heightOfWall, 10, 65);
+
+    var heightOfWall = 'Walls: ' + walls.walls.length;
+    fill(255);
+    text(heightOfWall, 10, 80);
 }
