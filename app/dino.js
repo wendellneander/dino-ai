@@ -8,6 +8,8 @@ function Dino(){
     this.walls;
     this.wallNearest;
 
+    this.cromossome = new Cromossome();
+
     this.score = 0;
     this.sensorDistanceToWall = width;
     this.sensorHeightWall = 0;
@@ -32,6 +34,12 @@ function Dino(){
         this.getWallData();
         
         this.isDead();
+
+        if(this.cromossome.checkIfNeedJump(this.sensorDistanceToWall, this.sensorHeightWall, GAME_SPEED)){
+            this.jump();
+        }
+
+        this.draw();
     }
 
     this.draw = function(){
@@ -54,11 +62,11 @@ function Dino(){
         let dead = a || b;
 
         if(dead){
-            this.walls.restart();
-            this.jumpToStartPosition();
-            this.score = 0;
-            GAME_SPEED = 5;
-            print('GAME OVER');
+            //this.walls.restart();
+            //this.jumpToStartPosition();
+            //this.score = 0;
+            //GAME_SPEED = 5;
+            //print('GAME OVER');
         }
 
         return dead;
@@ -94,4 +102,23 @@ function Dino(){
         this.sensorDistanceToWall = int(dist(myX, myY, this.wallNearest.x, this.wallNearest.y + this.wallNearest.height));
         this.sensorHeightWall = this.wallNearest.height;
     }
+
+    this.crossOver = function(dino){
+        
+        let cromossomeMother = this.cromossome.getCromossome();
+        let cromossomeFather = dino.cromossome.getCromossome();
+        let cutPoint = int(random(1, cromossomeMother.length));
+
+        let first = cromossomeFather.splice(0, cutPoint);
+        let second = cromossomeMother.splice(cutPoint);
+        let child = first.concat(second);
+
+        return child;
+    }
+
+    this.mutate = function(mutateRate){
+        //TODO
+    }
+
+    
 }

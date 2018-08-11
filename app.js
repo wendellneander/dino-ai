@@ -27,7 +27,7 @@ function draw(){
     dino.update(walls);
     dino.draw();
     
-    GAME_SPEED += (0.0001 + random(0.0001, 0.003));
+    GAME_SPEED += 0.0001;
 
     getGui();
 }
