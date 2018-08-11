@@ -15,10 +15,12 @@ function Cromossome(distance, height, speed){
         let newRateToJump = rateToJump / (distance * height * speed);
 
         let rate = this.sigmoid(newRateToJump/this.bias);
-
-        //print(rateToJump, newRateToJump, rate)
         
         return rate > 0.6;
+        
+        /*print(distance, ((this.rateToSpeed * height)/(speed * this.rateToHeight))/this.rateToDistance);
+
+        return distance == ((this.rateToSpeed * height)/(speed * this.rateToHeight))/this.rateToDistance;*/
     }
 
     this.getCromossome = function(){

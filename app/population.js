@@ -4,6 +4,9 @@ function Population(size, generations) {
     this.best;
     this.population = [];
     this.maxGenerations = generations;
+    this.generation = 0;
+
+    this.evolving = false;
 
     this.start = function(){
         if(this.population.length == 0){
@@ -11,24 +14,30 @@ function Population(size, generations) {
                 this.population.push(new Dino());
             }
         }
-        //TODO iniciar os dinos na tela
     }
 
-    this.update = function(){
-        this.population.forEach(dino => {
-            dino.update();
-        });
-
-        if(this.checkAllDead()){
+    this.update = function(walls){
+        if(this.checkAllDead() && !this.evolving){
+            this.evolving = true;
+            walls.restart();
             this.evaluate();
             this.getBest();
             this.evolve();
+            this.evolving = false;
+            print('GAME OVER');
+        }else{
+            for(let i = 0; i < this.population.length; i++){
+                let dino = this.population[i];
+                dino.update(walls);
+            }
         }
+
+        
     }
 
     this.checkAllDead = function(){
         for(let i = 0; i < this.population.length; i++){
-            if(!dino.isDead()){
+            if(!this.population[i].isDead){
                 return false;
             }
         }
@@ -39,6 +48,8 @@ function Population(size, generations) {
         this.population.forEach(dino => {
             this.fitness += dino.score;
         });
+
+        print('FITNESS: ', this.fitness);
     }
 
     this.getBest = function(){
@@ -49,6 +60,8 @@ function Population(size, generations) {
                 return 1;
             return 0;
         });
+
+        print('BEST: ', this.population[0]);
 
         return this.population[0];
     }
@@ -69,19 +82,24 @@ function Population(size, generations) {
     }
 
     this.evolve = function(){
+        print("EVOLVE");
         let newPopulation = [];
 
-        for(let i = 0; i < this.population.length / 2; i++){
+        for(let i = 0; i < this.population.length; i++){
             let father = this.getBest();
             let mother = this.getFather();
             let children = father.crossOver(mother);
     
-            children.forEach(child => {
-                newPopulation.push(child);
-            });
+            let newDino = new Dino();
+            newDino.cromossome = new Cromossome(children[0], children[1], children[2]);
+            newPopulation.push(newDino);
         }
 
-        this.population = newPopulation();
+        print("NEW POPULATION: ", newPopulation);
+        print("NEW POPULATION SIZE: ", newPopulation.length);
+
+        this.population = newPopulation;
+        this.generation++;
         this.start();
     }
 

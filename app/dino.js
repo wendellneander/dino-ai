@@ -7,6 +7,8 @@ function Dino(){
     this.jumpForce = 15;
     this.walls;
     this.wallNearest;
+    this.isDead = false;
+    this.color = int(random(100, 255));
 
     this.cromossome = new Cromossome();
 
@@ -29,13 +31,11 @@ function Dino(){
 
         this.isTouchingFloor();
 
-        this.calculateScore();
-
         this.getWallData();
         
-        this.isDead();
+        this.checkDead();
 
-        if(this.cromossome.checkIfNeedJump(this.sensorDistanceToWall, this.sensorHeightWall, GAME_SPEED)){
+        if(this.cromossome && this.cromossome.checkIfNeedJump(this.sensorDistanceToWall, this.sensorHeightWall, GAME_SPEED)){
             this.jump();
         }
 
@@ -43,7 +43,7 @@ function Dino(){
     }
 
     this.draw = function(){
-        fill(255);
+        fill(this.color);
         rect(this.x, this.y, this.size, this.size);
     }
 
@@ -53,20 +53,29 @@ function Dino(){
         }
     }
 
-    this.isDead = function(){
+    this.checkDead = function(){
+        let dead = false;
 
-        let a = (this.x < this.wallNearest.x && (this.x + this.size) > this.wallNearest.x) && (this.y + this.size) > this.wallNearest.y;
+        if(this.wallNearest){
+            let a = (this.x < this.wallNearest.x && (this.x + this.size) > this.wallNearest.x) && (this.y + this.size) > this.wallNearest.y;
 
-        let b = (this.x > this.wallNearest.x && this.x < (this.wallNearest.x + this.wallNearest.width)) && (this.y + this.size) > this.wallNearest.y;
-
-        let dead = a || b;
+            let b = (this.x > this.wallNearest.x && this.x < (this.wallNearest.x + this.wallNearest.width)) && (this.y + this.size) > this.wallNearest.y;
+    
+            dead = a || b;
+        }
 
         if(dead){
+            this.x = -100;
+            this.y = -100;
+            this.isDead = true;
+            print("DEAD");
             //this.walls.restart();
             //this.jumpToStartPosition();
             //this.score = 0;
             //GAME_SPEED = 5;
             //print('GAME OVER');
+        }else{
+            this.calculateScore();
         }
 
         return dead;

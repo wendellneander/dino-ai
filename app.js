@@ -6,15 +6,18 @@ const GENES_PER_GENOME = 3;
 const GENOME_INPUTS = 1;
 
 let dino;
+let population;
 let wall;
 let floor;
 
 function setup(){
     createCanvas(800, 500);
 
-    dino = new Dino();
+   // dino = new Dino();
     walls = new Walls();
     floor = new Floor();
+    population = new Population(10, 20);
+    population.start();
 }
 
 function draw(){
@@ -24,8 +27,7 @@ function draw(){
 
     floor.draw();
 
-    dino.update(walls);
-    dino.draw();
+    population.update(walls);
     
     GAME_SPEED += 0.0001;
 
@@ -33,27 +35,23 @@ function draw(){
 }
 
 function mouseClicked(){
-    dino.jump();
+    //dino.jump();
 }
 
 function getGui(){
-    var score = 'Score: ' + dino.score;
+    var speed = 'Speed: ' + GAME_SPEED;
     fill(255);
-    text(score, 10, 20);
+    text(speed, 10, 20);
 
-    var score = 'Speed: ' + GAME_SPEED;
+    var heightOfWall = 'Dinos: ' + population.population.length;
     fill(255);
-    text(score, 10, 35);
+    text(heightOfWall, 10, 35);
 
-    var distance = 'Distance: ' + dino.sensorDistanceToWall;
+    var heightOfWall = 'Generation: ' + population.generation;
     fill(255);
-    text(distance, 10, 50);
+    text(heightOfWall, 10, 50);
 
-    var heightOfWall = 'Height: ' + dino.sensorHeightWall;
+    var heightOfWall = 'Fitness: ' + population.fitness;
     fill(255);
     text(heightOfWall, 10, 65);
-
-    var heightOfWall = 'Walls: ' + walls.walls.length;
-    fill(255);
-    text(heightOfWall, 10, 80);
 }
