@@ -16,7 +16,7 @@ function setup(){
    // dino = new Dino();
     walls = new Walls();
     floor = new Floor();
-    population = new Population(10, 20);
+    population = new Population(20, 20, 0.5);
     population.start();
 }
 
@@ -29,7 +29,7 @@ function draw(){
 
     population.update(walls);
     
-    GAME_SPEED += 0.0001;
+    GAME_SPEED += 0.001;
 
     getGui();
 }

@@ -8,7 +8,7 @@ function Dino(){
     this.walls;
     this.wallNearest;
     this.isDead = false;
-    this.color = int(random(100, 255));
+    this.color = color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255)));
 
     this.cromossome = new Cromossome();
 
@@ -69,11 +69,11 @@ function Dino(){
             this.y = -100;
             this.isDead = true;
             print("DEAD");
-            //this.walls.restart();
-            //this.jumpToStartPosition();
-            //this.score = 0;
-            //GAME_SPEED = 5;
-            //print('GAME OVER');
+            /*this.walls.restart();
+            this.jumpToStartPosition();
+            this.score = 0;
+            GAME_SPEED = 5;
+            print('GAME OVER');*/
         }else{
             this.calculateScore();
         }
@@ -126,7 +126,27 @@ function Dino(){
     }
 
     this.mutate = function(mutateRate){
-        //TODO
+        let cromossome = this.cromossome.getCromossome();
+        for(let i = 0; i < cromossome.length; i++){
+            if(random(0,1) < mutateRate){
+                print("MUTATION");
+
+                if(i == 0){
+                    cromossome[i] = random(0, width);
+                }
+
+                if(i == 1){
+                    cromossome[i] = random(50, 130);
+                }
+
+                if(i == 2){
+                    cromossome[i] = random(5, 10);
+                }
+                
+            }
+        }
+        
+        this.cromossome.setCromossome(cromossome);
     }
 
     

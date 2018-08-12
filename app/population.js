@@ -1,10 +1,11 @@
-function Population(size, generations) {
+function Population(size, generations, rateMutation) {
     this.size = size;
     this.fitness = 0;
     this.best;
     this.population = [];
     this.maxGenerations = generations;
-    this.generation = 0;
+    this.generation = 1;
+    this.rateMutation = rateMutation;
 
     this.evolving = false;
 
@@ -18,6 +19,7 @@ function Population(size, generations) {
 
     this.update = function(walls){
         if(this.checkAllDead() && !this.evolving){
+            GAME_SPEED = 5;
             this.evolving = true;
             walls.restart();
             this.evaluate();
@@ -89,9 +91,10 @@ function Population(size, generations) {
             let father = this.getBest();
             let mother = this.getFather();
             let children = father.crossOver(mother);
-    
             let newDino = new Dino();
+            
             newDino.cromossome = new Cromossome(children[0], children[1], children[2]);
+            newDino.mutate(this.rateMutation);
             newPopulation.push(newDino);
         }
 
