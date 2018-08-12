@@ -1,9 +1,10 @@
-
-let GAME_SPEED = 5;
-const GAME_GRAVITY = 0.6;
+const GAME_GRAVITY = .6;
 const FLOOR_HEIGHT = 20;
 const GENES_PER_GENOME = 3;
 const GENOME_INPUTS = 1;
+
+let RATE_MUTATION = .03;
+let GAME_SPEED = 5;
 
 let dino;
 let population;
@@ -13,10 +14,9 @@ let floor;
 function setup(){
     createCanvas(800, 500);
 
-   // dino = new Dino();
     walls = new Walls();
     floor = new Floor();
-    population = new Population(20, 20, 0.5);
+    population = new Population(20, 20, RATE_MUTATION);
     population.start();
 }
 
@@ -29,13 +29,9 @@ function draw(){
 
     population.update(walls);
     
-    GAME_SPEED += 0.001;
+    GAME_SPEED += 0.0001;
 
     getGui();
-}
-
-function mouseClicked(){
-    //dino.jump();
 }
 
 function getGui(){
@@ -51,7 +47,11 @@ function getGui(){
     fill(255);
     text(heightOfWall, 10, 50);
 
-    var heightOfWall = 'Fitness: ' + population.fitness;
+    var heightOfWall = 'Last Fitness: ' + population.lastFitness;
     fill(255);
     text(heightOfWall, 10, 65);
+
+    var heightOfWall = 'Best: ' + population.bestFitness;
+    fill(255);
+    text(heightOfWall, 10, 80);
 }

@@ -1,6 +1,8 @@
 function Population(size, generations, rateMutation) {
     this.size = size;
     this.fitness = 0;
+    this.lastFitness = 0;
+    this.bestFitness = 0;
     this.best;
     this.population = [];
     this.maxGenerations = generations;
@@ -26,6 +28,7 @@ function Population(size, generations, rateMutation) {
             this.getBest();
             this.evolve();
             this.evolving = false;
+            this.fitness = 0;
             print('GAME OVER');
         }else{
             for(let i = 0; i < this.population.length; i++){
@@ -33,8 +36,6 @@ function Population(size, generations, rateMutation) {
                 dino.update(walls);
             }
         }
-
-        
     }
 
     this.checkAllDead = function(){
@@ -43,6 +44,7 @@ function Population(size, generations, rateMutation) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -64,6 +66,8 @@ function Population(size, generations, rateMutation) {
         });
 
         print('BEST: ', this.population[0]);
+        this.lastFitness = this.population[0].score;
+        this.bestFitness = this.lastFitness > this.bestFitness ? this.lastFitness : this.bestFitness;
 
         return this.population[0];
     }

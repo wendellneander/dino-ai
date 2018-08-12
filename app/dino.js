@@ -15,6 +15,7 @@ function Dino(){
     this.score = 0;
     this.sensorDistanceToWall = width;
     this.sensorHeightWall = 0;
+    this.sensorWidthWall = 0;
 
     this.jumpToStartPosition = function(){
         this.x = 50;
@@ -43,6 +44,9 @@ function Dino(){
     }
 
     this.draw = function(){
+        fill(255);
+        text(this.score, this.x, this.y);
+
         fill(this.color);
         rect(this.x, this.y, this.size, this.size);
     }
@@ -110,6 +114,7 @@ function Dino(){
         
         this.sensorDistanceToWall = int(dist(myX, myY, this.wallNearest.x, this.wallNearest.y + this.wallNearest.height));
         this.sensorHeightWall = this.wallNearest.height;
+        this.sensorWidthWall = this.wallNearest.width;
     }
 
     this.crossOver = function(dino){
@@ -140,7 +145,7 @@ function Dino(){
                 }
 
                 if(i == 2){
-                    cromossome[i] = random(5, 10);
+                    cromossome[i] = random(20, 70);
                 }
                 
             }

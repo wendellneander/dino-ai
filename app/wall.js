@@ -1,6 +1,6 @@
 function Wall(){
     this.height = int(random(50, 130));
-    this.width = this.width = random(20, 70);
+    this.width = int(random(20, 70));
     this.x = width + this.width;
     this.y = (height - this.height) - FLOOR_HEIGHT;
     this.isDead = false;
